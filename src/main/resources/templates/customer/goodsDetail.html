@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html  lang="en"  xmlns="http://www.w3.org/1999/xhtml"
+	   xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8"/>
+<head th:include="include :: header">
+</head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<input id="gid" type="hidden" th:value="${goods.id}"/>
+		<div class="datum_car" id="content">
+			<div class="datum_left">
+				<img src="//img5.taoche.cn/1b/15ea9457-10190gbbdy.jpg" onerror="this.src='//used.xcar.com.cn/imgs/error_444_333.jpg'" alt="" height="444" width="333">
+			</div>
+			<div class="datum_right">
+				<h2 th:text="${goods.typeName}"></h2>
+				<div class="datum_data">
+					<p class="cost">
+						<span>报价：<b>￥<i th:text="${goods.price}"></i><i>元</i></b></span>
+					</p>
+				</div>
+				<div class="parameter">
+					<dl>
+						<dt>品牌</dt>
+						<dd th:text="${goods.brandName}"></dd>
+					</dl>
+					<dl class="w150">
+						<dt>所在地</dt>
+						<dd th:text="${goods.location}"></dd>
+					</dl>
+					<dl>
+						<dt>产地</dt>
+						<dd th:text="${goods.place}"></dd>
+					</dl>
+				</div>
+				<div class="base_price">
+					<a href="javascript:" id="popup-btn1" onclick="pay();" class="but red_01">立即支付</a>
+				</div>
+			</div>
+		</div>
+		<div class="comment">
+			<div class="TIT">
+				<h2>最新评论</h2>
+			</div>
+			<div class="CONT" id="comment_list">
+				<dl th:each="c,State:${clist}">
+					<dt>
+						<a class="icon" href="javascript:void(0);" >
+							<img  src="http://cdn.static.17k.com/user/avatar/12/72/75/23427572.jpg-88x88?v=1567215239000">
+						</a>
+					</dt>
+					<dd>
+						<h1 class="author">
+							<a href="javascript:void(0);" th:text="${c.userName}"></a>
+						</h1>
+						<div class="context red">
+							<p class="cont" th:text="${c.content}"></p>
+						</div>
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript"
+		src="/js/lin/customer/detail.js"></script>
+</body>
+</html>
