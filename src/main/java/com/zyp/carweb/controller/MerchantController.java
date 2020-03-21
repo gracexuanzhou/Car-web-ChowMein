@@ -7,6 +7,7 @@ import com.zyp.carweb.base.Result;
 import com.zyp.carweb.model.Goods;
 import com.zyp.carweb.service.GoodsService;
 import com.zyp.carweb.utils.PageUtils;
+import com.zyp.carweb.vo.GoodsVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,7 @@ public class MerchantController extends BaseController {
 
     @RequestMapping("/getGoods")
     public PageUtils list(@RequestParam Map<String, Object> params) {
-        Page<Goods> page = new Page<>(getCurrent(request), getSize(request));
+        Page<GoodsVo> page = new Page<>(getCurrent(request), getSize(request));
         page.setCondition(params);
         page.setAsc(false);
         removePageParam(params);

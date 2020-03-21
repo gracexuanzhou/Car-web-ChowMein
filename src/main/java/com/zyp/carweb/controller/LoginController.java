@@ -2,6 +2,10 @@ package com.zyp.carweb.controller;
 
 import com.zyp.carweb.base.MessageInfo;
 import com.zyp.carweb.base.Result;
+import com.zyp.carweb.factory.CustomerFactory;
+import com.zyp.carweb.factory.LoginLog;
+import com.zyp.carweb.factory.LoginLogFactory;
+import com.zyp.carweb.factory.MerchantFactory;
 import com.zyp.carweb.model.User;
 import com.zyp.carweb.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +46,15 @@ public class LoginController {
         if (!inputPwd.equals(user.getPassWord())) {
             return new MessageInfo("密码错误！", -4);
         }
+        LoginLogFactory factory = new LoginLogFactory();
+        LoginLog loginLog;
+        if(user.getUserType().equals(1)){
+            loginLog = factory.getLoginLog("customer");
+        }else{
+            //商家
+            loginLog = factory.getLoginLog("merchant");
+        }
+        loginLog.loginLog(user);
         String errorMessage = "";
         request.setAttribute("user", user);
         Subject subjectUser = SecurityUtils.getSubject();

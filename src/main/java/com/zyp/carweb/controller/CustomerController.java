@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.zyp.carweb.JsonUtils;
 import com.zyp.carweb.base.BaseController;
 import com.zyp.carweb.base.Result;
+import com.zyp.carweb.facade.Facade;
 import com.zyp.carweb.model.Comment;
 import com.zyp.carweb.model.Goods;
 import com.zyp.carweb.model.Order;
@@ -11,6 +12,7 @@ import com.zyp.carweb.service.CommentService;
 import com.zyp.carweb.service.GoodsService;
 import com.zyp.carweb.service.OrderService;
 import com.zyp.carweb.utils.PageUtils;
+import com.zyp.carweb.vo.GoodsVo;
 import com.zyp.carweb.vo.OrderVo;
 import com.zyp.carweb.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +37,12 @@ public class CustomerController extends BaseController {
     private OrderService orderService;
 
     @Autowired
-    private CommentService commentService;
+    private Facade facade;
 
 
     @RequestMapping("/goods/All")
     public PageUtils list(@RequestParam Map<String, Object> params) {
-        Page<Goods> page = new Page<>(getCurrent(request), getSize(request));
+        Page<GoodsVo> page = new Page<>(getCurrent(request), getSize(request));
         page.setCondition(params);
         page.setAsc(false);
         removePageParam(params);
@@ -84,13 +86,8 @@ public class CustomerController extends BaseController {
 
     @RequestMapping("/comment/save")
     public Result orderReceive(Comment comment) {
-        Order orderVo = orderService.selectByPrimaryKey(comment.getOrderId());
-        comment.setGoodsId(orderVo.getGoodsId());
-        comment.setUserId(orderVo.getUserId());
         comment.setUserName(getSSOUser().getUserName());
-        commentService.insertSelective(comment);
-        orderVo.setStatus(2);
-        orderService.updateByPrimaryKeySelective(orderVo);
+        facade.doSaveComment(comment);
         return Result.ok();
     }
 }

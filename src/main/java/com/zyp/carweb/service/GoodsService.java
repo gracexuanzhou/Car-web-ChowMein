@@ -2,6 +2,7 @@ package com.zyp.carweb.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.zyp.carweb.model.Goods;
+import com.zyp.carweb.vo.GoodsVo;
 
 import java.util.Map;
 
@@ -9,7 +10,7 @@ public interface GoodsService {
 
     int saveGoods(Goods goods);
 
-    Page<Goods> selectGoodsPage(Page<Goods> page, Map<String, Object> map);
+    Page<GoodsVo> selectGoodsPage(Page<GoodsVo> page, Map<String, Object> map);
 
     Goods selectByPrimaryKey(Integer id);
 

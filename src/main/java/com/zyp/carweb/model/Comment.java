@@ -2,7 +2,7 @@ package com.zyp.carweb.model;
 
 import java.util.Date;
 
-public class Comment {
+public class Comment implements Cloneable {
     private Integer id;
 
     private String content;
@@ -96,5 +96,16 @@ public class Comment {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Object clone(){
+        System.out.println("clone comment object");
+        Comment  comment = null;
+        try {
+            comment = (Comment) super.clone();
+        }catch (CloneNotSupportedException e){
+            e.printStackTrace();
+        }
+        return comment;
     }
 }

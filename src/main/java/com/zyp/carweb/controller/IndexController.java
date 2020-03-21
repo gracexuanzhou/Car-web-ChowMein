@@ -3,6 +3,9 @@ package com.zyp.carweb.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zyp.carweb.base.BaseController;
+import com.zyp.carweb.factory.CustomerFactory;
+import com.zyp.carweb.factory.MenuFactory;
+import com.zyp.carweb.factory.MerchantFactory;
 import com.zyp.carweb.model.Comment;
 import com.zyp.carweb.model.Goods;
 import com.zyp.carweb.service.CommentService;
@@ -33,23 +36,14 @@ public class IndexController extends BaseController {
     @RequestMapping("/index")
     public String index(HttpServletRequest request){
         List<JSONObject> menuList = new ArrayList<>();
+        MenuFactory factory;
         if(getSSOUser().getUserType().equals(1)){
-            //顾客
-            JSONObject menu = new JSONObject();
-            menu.put("text","商品列表");
-            menu.put("url","/customer");
-            menuList.add(menu);
-            menu = new JSONObject();
-            menu.put("text","订单管理");
-            menu.put("url","/order");
-            menuList.add(menu);
+            factory = new CustomerFactory();
         }else{
             //商家
-            JSONObject menu = new JSONObject();
-            menu.put("text","商品管理");
-            menu.put("url","/merchant");
-            menuList.add(menu);
+            factory = new MerchantFactory();
         }
+        menuList = factory.getMenu().produce();
         request.setAttribute("menus", menuList);
         request.setAttribute("noticelist", null);
         request.setAttribute("userName", getSSOUser().getUserName());
@@ -84,7 +78,8 @@ public class IndexController extends BaseController {
         Goods goods = goodsService.selectByPrimaryKey(id);
         Comment comment = new Comment();
         comment.setGoodsId(id);
-        List<Comment> list = commentService.getCommentByGoods(comment);
+        Comment copy = (Comment)comment.clone();
+        List<Comment> list = commentService.getCommentByGoods(copy);
         model.addAttribute("clist",list);
         model.addAttribute("goods",goods);
         return "customer/goodsDetail";
