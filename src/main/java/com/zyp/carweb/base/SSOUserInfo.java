@@ -2,10 +2,7 @@ package com.zyp.carweb.base;
 
 import java.io.Serializable;
 
-/**
- * @author yangyang
- *         datetime 2018-05-15
- */
+
 public class SSOUserInfo implements Serializable {
 
 
