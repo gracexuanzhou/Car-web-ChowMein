@@ -9,9 +9,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by yangyang on 2017-2-3.
- */
+
 public class JsonUtils {
     public static <T> T convert(Object object, Class<T> clz) {
         if (object.getClass().getName().equals(clz.getName())) return (T) object;
