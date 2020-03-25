@@ -3,9 +3,7 @@ package com.zyp.carweb.base;
 import java.io.Serializable;
 import java.util.HashMap;
 
-/**
- * Created by yangyang on 2018/5/15 0029.
- */
+
 public class Result<T> extends HashMap<String, Object> implements Serializable {
 
     private static final long serialVersionUID = 1L;
