@@ -13,9 +13,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by yangyang on 2017/4/14
- */
+
 public class RequestUtils {
 
     public static String readData(HttpServletRequest request) {
