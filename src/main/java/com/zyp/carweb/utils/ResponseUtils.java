@@ -6,9 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- * Created by yangyang on 2018/4/11
- */
+
 public class ResponseUtils {
 
     public static void renderString(HttpServletResponse response, String data) {
