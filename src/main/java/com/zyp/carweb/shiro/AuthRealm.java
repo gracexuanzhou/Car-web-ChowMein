@@ -13,9 +13,7 @@ import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * yangyang on 2017/12/31.
- */
+
 public class AuthRealm extends AuthorizingRealm {
     @Autowired
     UserService userService;
