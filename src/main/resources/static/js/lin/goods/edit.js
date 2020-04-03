@@ -8,7 +8,7 @@ $.validator.setDefaults({
 	}
 });
 function update() {
-    var role = $('#signupForm').serialize();
+    var role = $('#goodsUpdateForm').serialize();
 	$.ajax({
 		cache : true,
 		type : "POST",
@@ -34,15 +34,33 @@ function update() {
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
+	$("#goodsUpdateForm").validate({
 		rules : {
-			roleName : {
+			brandName : {
+				required : true
+			},
+			typeName : {
+				required : true
+			},
+			price : {
+				required : true
+			},
+			place : {
 				required : true
 			}
 		},
 		messages : {
-			roleName : {
-				required : icon + "请输入角色名"
+			brandName : {
+				required : icon + "请输入品牌名称"
+			},
+			typeName : {
+				required : icon + "请输入型号"
+			},
+			price : {
+				required : icon + "请输入价格"
+			},
+			place : {
+				required : icon + "请输入产地"
 			}
 		}
 	});

@@ -9,6 +9,22 @@ function load() {
     var param = {};
     param.pageSize = 100;
     param.pageNumber = 0;
+    param.brandName = $("#likeName").val();
+    if($("#minPrice").val() != ""){
+        param.minPrice = $("#minPrice").val();
+    }
+    if($("#maxPrice").val() != ""){
+        param.maxPrice = $("#maxPrice").val();
+    }
+    if(param.minPrice != "" && param.maxPrice != ""){
+        if(Number(param.minPrice) > Number(param.maxPrice)){
+            $.gritter.add({
+                text: '价格的最大值不能小于最小值',
+                class_name: 'gritter-warning'
+            });
+            return false;
+        }
+    }
     $.ajax({
         url: "/customer/goods/All",
         data:param,

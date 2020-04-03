@@ -86,6 +86,16 @@ public class DateUtil {
 
     }
 
+    public static Date plusDay2(int num){
+        Date d = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(d);
+        ca.add(Calendar.DATE, num);// num为增加的天数，可以改变的
+        d = ca.getTime();
+       return d;
+    }
+
     public static void main(String[] args) {
         System.out.println(getCurrentDate());
     }

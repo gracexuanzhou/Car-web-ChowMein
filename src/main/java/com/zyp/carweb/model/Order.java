@@ -11,13 +11,13 @@ public class Order {
 
     private Integer status;
 
-    private Integer days;
+    private Date days;
 
     private Date createTime;
 
     private Date updateTime;
 
-    public Order(Integer id, Integer goodsId, Integer userId, Integer status, Integer days, Date createTime, Date updateTime) {
+    public Order(Integer id, Integer goodsId, Integer userId, Integer status, Date days, Date createTime, Date updateTime) {
         this.id = id;
         this.goodsId = goodsId;
         this.userId = userId;
@@ -63,11 +63,11 @@ public class Order {
         this.status = status;
     }
 
-    public Integer getDays() {
+    public Date getDays() {
         return days;
     }
 
-    public void setDays(Integer days) {
+    public void setDays(Date days) {
         this.days = days;
     }
 

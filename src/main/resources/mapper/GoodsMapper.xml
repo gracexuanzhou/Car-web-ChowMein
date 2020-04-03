@@ -147,9 +147,7 @@
     <include refid="Base_Column_List"/>
     FROM goods
     <trim prefix="where" prefixOverrides="AND |OR ">
-       <if test="creator != null and creator != ''">
-         and creator = #{creator}
-       </if>
+      <include refid="pageSql"/>
     </trim>
     ORDER BY `create_time` DESC
     <trim prefix="limit" prefixOverrides=",">
@@ -163,10 +161,26 @@
     count(1)
     FROM goods
     <trim prefix="where" prefixOverrides="AND |OR ">
-      <if test="creator != null and creator != ''">
-        and creator = #{creator}
-      </if>
+      <include refid="pageSql"/>
     </trim>
   </select>
 
+
+  <sql id="pageSql">
+        <if test="creator != null and creator != ''">
+          and creator = #{creator}
+        </if>
+        <if test="brandName != null and brandName != ''">
+          and brand_name like CONCAT ('%',#{brandName},'%')
+        </if>
+        <if test="minPrice != null and maxPrice != null">
+          and price &lt;= #{maxPrice} and price &gt;= #{minPrice}
+        </if>
+        <if test="minPrice != null and maxPrice == null">
+          and price &gt;= #{minPrice}
+        </if>
+        <if test="minPrice == null and maxPrice != null">
+          and price &lt;= #{maxPrice}
+        </if>
+  </sql>
 </mapper>

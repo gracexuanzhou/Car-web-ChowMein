@@ -1,9 +1,12 @@
 package com.zyp.carweb.controller;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.zyp.carweb.DateUtil;
 import com.zyp.carweb.JsonUtils;
 import com.zyp.carweb.base.BaseController;
 import com.zyp.carweb.base.Result;
+import com.zyp.carweb.bridge.CustomerOrder;
+import com.zyp.carweb.bridge.OrderParams;
 import com.zyp.carweb.facade.Facade;
 import com.zyp.carweb.model.Comment;
 import com.zyp.carweb.model.Goods;
@@ -16,12 +19,14 @@ import com.zyp.carweb.vo.GoodsVo;
 import com.zyp.carweb.vo.OrderVo;
 import com.zyp.carweb.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,8 +51,7 @@ public class CustomerController extends BaseController {
         page.setCondition(params);
         page.setAsc(false);
         removePageParam(params);
-        Map<String, Object> map = new HashMap<>();
-        page = goodsService.selectGoodsPage(page,map);
+        page = goodsService.selectGoodsPage(page,params);
         log.info("品牌查询结果："+ JsonUtils.toJson(page));
         PageUtils pageUtils = new PageUtils(page.getRecords(), page.getTotal());
         return pageUtils;
@@ -59,7 +63,8 @@ public class CustomerController extends BaseController {
         Order order = new Order();
         order.setGoodsId(userVo.getGoodsId());
         order.setUserId(getSSOUser().getId());
-        order.setDays((int)(10+Math.random()*(20-5+1)));
+        int i = (int)(5+Math.random()*(19-5+1));
+        order.setDays(DateUtil.plusDay2(i));
         orderService.insertSelective(order);
         return Result.ok();
     }
@@ -70,9 +75,10 @@ public class CustomerController extends BaseController {
         page.setCondition(params);
         page.setAsc(false);
         removePageParam(params);
-        Map<String, Object> map = new HashMap<>();
-        map.put("creator",getSSOUser().getId());
-        page = orderService.selectPage(page,map);
+        OrderParams op = new OrderParams(new CustomerOrder());
+        OrderVo order = new OrderVo();
+        order.setUserId(getSSOUser().getId());
+        page = orderService.selectPage(page,op.buildOrderParam(order));
         log.info("订单查询结果："+ JsonUtils.toJson(page));
         PageUtils pageUtils = new PageUtils(page.getRecords(), page.getTotal());
         return pageUtils;
@@ -90,4 +96,5 @@ public class CustomerController extends BaseController {
         facade.doSaveComment(comment);
         return Result.ok();
     }
+
 }

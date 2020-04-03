@@ -14,6 +14,7 @@ import com.zyp.carweb.command.Receiver;
 import com.zyp.carweb.dao.GoodsMapper;
 import com.zyp.carweb.dao.UserMapper;
 import com.zyp.carweb.model.Goods;
+import com.zyp.carweb.model.User;
 import com.zyp.carweb.service.GoodsService;
 import com.zyp.carweb.vo.GoodsVo;
 import lombok.extern.slf4j.Slf4j;
@@ -71,10 +72,15 @@ public class GoodsServiceImpl implements GoodsService {
         map.put("end", size);
         List<Goods> list = goodsMapper.selectGoodsList(map);
         List<GoodsVo> voList = new ArrayList<>();
+        Map<Integer,String> uNameMap = new HashMap<>();
         list.forEach(item ->{
+            if(!uNameMap.containsKey(item.getCreator())){
+                User user = userMapper.selectByPrimaryKey(item.getCreator());
+                uNameMap.put(item.getCreator(),user.getUserName());
+            }
             GoodsBuilder builder = new ConcreteBuilder();
             Director director = new Director(builder);
-            director.construct(item,userMapper.selectByPrimaryKey(item.getCreator()).getUserName());
+            director.construct(item,uNameMap.get(item.getCreator()));
             voList.add(builder.retrieveResult());
         });
         if (total != 0) {

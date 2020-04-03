@@ -10,7 +10,7 @@ public class CustomerMenu extends Menu {
     @Override
     public List<JSONObject> produce() {
         List<JSONObject> menuList = new ArrayList<>();
-        //customer
+        //顾客
         JSONObject menu = new JSONObject();
         menu.put("text","商品列表");
         menu.put("url","/customer");

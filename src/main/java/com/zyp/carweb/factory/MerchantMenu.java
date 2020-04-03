@@ -14,6 +14,10 @@ public class MerchantMenu extends Menu {
         menu.put("text","商品管理");
         menu.put("url","/merchant");
         menuList.add(menu);
+        menu = new JSONObject();
+        menu.put("text","订单管理");
+        menu.put("url","/merchant/order");
+        menuList.add(menu);
         return menuList;
     }
 }

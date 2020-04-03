@@ -8,10 +8,41 @@
 
 </style>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content ">
-		<div class="listTb bigPicList clearfix" id="content">
+<div class="wrapper wrapper-content ">
+	<div class="col-sm-12">
+		<div class="ibox">
+			<div class="ibox-body">
+				<div class="fixed-table-toolbar">
+					<div class="columns pull-left">
+					</div>
+					<div class="columns pull-right">
+						&nbsp;&nbsp;<button class="btn btn-success" onclick="load()">查询</button>
+					</div>
+					<div class="columns pull-right">
+						<input  type="number" id="maxPrice"  style="width: 200px;" class="form-control laydate-icon"  placeholder="最大金额"/>
+					</div>
+					<div class="columns pull-right">
+						<span style="margin: 0px 5px;">至</span>
+					</div>
+					<div class="columns pull-right">
+						<input  type="number" id="minPrice" style="width: 200px;"  class="form-control laydate-icon"  placeholder="最小金额" />
+					</div>
+					<div class="columns pull-right nopadding">
+						<label  class="control-label">价格区间</label>
+					</div>
+					<div class="columns pull-right col-md-2 nopadding">
+						<input id="likeName" type="text" class="form-control"
+							   placeholder="请输入品牌"/>
+					</div>
+				</div>
+				<div class="wrapper wrapper-content ">
+					<div class="listTb bigPicList clearfix" id="content">
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+</div>
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript"
 		src="/js/lin/customer/index.js"></script>

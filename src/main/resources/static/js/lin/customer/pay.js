@@ -26,11 +26,12 @@ $.validator.setDefaults({
     }
 });
 function save() {
+    validateRule();
     $.ajax({
         cache : true,
         type : "POST",
         url : "/customer/order/pay",
-        data : $('#signupForm').serialize(), // 你的formid
+        data : $('#payForm').serialize(), // 你的formid
         async : false,
         error : function(request) {
             parent.layer.alert("网络超时");
@@ -49,15 +50,47 @@ function save() {
 }
 function validateRule() {
     var icon = "<i class='fa fa-times-circle'></i> ";
-    $("#signupForm").validate({
+    $("#payForm").validate({
         rules : {
-            name : {
+            cardName : {
                 required : true
+            },
+            cardNo : {
+                required : true,
+                maxlength:18,
+                minlength:16
+            },
+            passWord : {
+                required : true
+            },
+            expiryDate : {
+                required : true
+            },
+            securityCode : {
+                required : true,
+                maxlength:3,
+                minlength:3
             }
         },
         messages : {
-            name : {
-                required : icon + "请输入名字"
+            cardName : {
+                required : icon + "请输入姓名"
+            },
+            cardNo : {
+                required : icon + "请输入卡号",
+                maxlength: $.validator.format("最多可以输入 {0} 个字符"),
+                minlength: $.validator.format("最少要输入 {0} 个字符")
+            },
+            passWord : {
+                required : icon + "请输入密码"
+            },
+            expiryDate : {
+                required : icon + "请输入有效期"
+            },
+            securityCode : {
+                required : icon + "请输入验证码",
+                maxlength: $.validator.format("最多可以输入 {0} 个字符"),
+                minlength: $.validator.format("最少要输入 {0} 个字符")
             }
         }
     })

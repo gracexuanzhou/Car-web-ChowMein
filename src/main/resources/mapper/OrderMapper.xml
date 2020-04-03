@@ -7,7 +7,7 @@
       <arg column="goods_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="days" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="days" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
@@ -30,7 +30,7 @@
       status, days, create_time, 
       update_time)
     values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{days,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{days,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zyp.carweb.model.Order">
@@ -72,7 +72,7 @@
         #{status,jdbcType=INTEGER},
       </if>
       <if test="days != null">
-        #{days,jdbcType=INTEGER},
+        #{days,jdbcType=TIMESTAMP},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -95,7 +95,7 @@
         status = #{status,jdbcType=INTEGER},
       </if>
       <if test="days != null">
-        days = #{days,jdbcType=INTEGER},
+        days = #{days,jdbcType=TIMESTAMP},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -111,7 +111,7 @@
     set goods_id = #{goodsId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
-      days = #{days,jdbcType=INTEGER},
+      days = #{days,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
@@ -122,18 +122,18 @@
     SELECT
         o.id,
         o.status,
-        o.days,
-        o.create_time as createTime,
+        DATE_FORMAT(o.days,'%Y-%m-%d') as daysStr,
+        DATE_FORMAT(o.create_time,'%Y-%m-%d  %H:%m:%s') as createTimeStr,
         g.brand_name as brandName,
         g.type_name as typeName,
         g.location as location,
-        g.price
+        g.price,
+        u.user_name as userName
     FROM b_order o
      join goods g on o.goods_id = g.id
+     join user u on o.user_id = u.id
     <trim prefix="where" prefixOverrides="AND |OR ">
-      <if test="creator != null and creator != ''">
-        and o.user_id = #{creator}
-      </if>
+      <include refid="pageSql"/>
     </trim>
     ORDER BY o.create_time DESC
     <trim prefix="limit" prefixOverrides=",">
@@ -145,11 +145,28 @@
   <select id="selectCount" resultType="java.lang.Integer" parameterType="map">
     SELECT
     count(1)
-    FROM b_order
+    FROM b_order o
+    join goods g on o.goods_id = g.id
     <trim prefix="where" prefixOverrides="AND |OR ">
-      <if test="creator != null and creator != ''">
-        and user_id = #{creator}
-      </if>
+      <include refid="pageSql"/>
     </trim>
   </select>
+
+  <sql id="pageSql">
+    <if test="creator != null and creator != ''">
+      and o.user_id = #{creator}
+    </if>
+    <if test="brandName != null and brandName != ''">
+      and g.brand_name like CONCAT ('%',#{brandName},'%')
+    </if>
+    <if test="minPrice != null and maxPrice != null">
+      and g.price &lt;= #{maxPrice} and g.price &gt;= #{minPrice}
+    </if>
+    <if test="minPrice != null and maxPrice == null">
+      and g.price &gt;= #{minPrice}
+    </if>
+    <if test="minPrice == null and maxPrice != null">
+      and g.price &lt;= #{maxPrice}
+    </if>
+  </sql>
 </mapper>

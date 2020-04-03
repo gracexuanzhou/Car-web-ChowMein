@@ -22,4 +22,20 @@ public class ConcreteBuilder implements GoodsBuilder {
     public GoodsVo retrieveResult() {
         return goodsVo;
     }
+
+
+    @Override
+    public String name() {
+        return null;
+    }
+
+    @Override
+    public Integer packing() {
+        return null;
+    }
+
+    @Override
+    public float price() {
+        return 0;
+    }
 }

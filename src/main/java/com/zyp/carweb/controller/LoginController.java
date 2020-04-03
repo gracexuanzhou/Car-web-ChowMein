@@ -1,11 +1,8 @@
 package com.zyp.carweb.controller;
 
 import com.zyp.carweb.base.MessageInfo;
-import com.zyp.carweb.base.Result;
-import com.zyp.carweb.factory.CustomerFactory;
 import com.zyp.carweb.factory.LoginLog;
 import com.zyp.carweb.factory.LoginLogFactory;
-import com.zyp.carweb.factory.MerchantFactory;
 import com.zyp.carweb.model.User;
 import com.zyp.carweb.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -84,6 +81,17 @@ public class LoginController {
     public MessageInfo reg(HttpServletRequest request, HttpServletResponse response, User user) {
         String inputPwd = DigestUtils.md5Hex(user.getPassWord());
         user.setPassWord(null);
+
+        if(user.getUserType() == 2){
+            //商家
+            String loginName = user.getLoginName();
+            user.setLoginName(null);
+            User dbUser = userService.findByUser(user);
+            if(dbUser != null){
+                return new MessageInfo("商户已存在，系统中仅允许有一个商家！", -2);
+            }
+            user.setLoginName(loginName);
+        }
         User dbUser = userService.findByUser(user);
         if (dbUser != null ) {
             return new MessageInfo("用户已存在！", -2);

@@ -1,13 +1,25 @@
 package com.zyp.carweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.zyp.carweb.JsonUtils;
 import com.zyp.carweb.base.BaseController;
 import com.zyp.carweb.base.Result;
+import com.zyp.carweb.bridge.CustomerOrder;
+import com.zyp.carweb.bridge.MerchantOrder;
+import com.zyp.carweb.bridge.OrderParams;
+import com.zyp.carweb.interceptor.Message;
+import com.zyp.carweb.interceptor.framework.Framework;
+import com.zyp.carweb.interceptor.framework.Service.ServiceImp;
+import com.zyp.carweb.interceptor.interceptors.Interceptor;
+import com.zyp.carweb.interceptor.interceptors.LoggingInterceptor;
 import com.zyp.carweb.model.Goods;
+import com.zyp.carweb.model.Order;
 import com.zyp.carweb.service.GoodsService;
+import com.zyp.carweb.service.OrderService;
 import com.zyp.carweb.utils.PageUtils;
 import com.zyp.carweb.vo.GoodsVo;
+import com.zyp.carweb.vo.OrderVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +37,9 @@ public class MerchantController extends BaseController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private OrderService orderService;
 
 
     @RequestMapping("/getGoods")
@@ -47,6 +62,7 @@ public class MerchantController extends BaseController {
         try{
             goods.setCreator(getSSOUser().getId());
             goodsService.saveGoods(goods);
+            addLogInfo(getSSOUser().getUserName(),"c", JSONObject.toJSONString(goods));
             return Result.ok("成功");
         }catch (Exception e){
             return Result.error(e.getMessage());
@@ -60,6 +76,7 @@ public class MerchantController extends BaseController {
     public Result update(Goods goods) {
         try{
             goodsService.updateByPrimaryKeySelective(goods);
+            addLogInfo(getSSOUser().getUserName(),"u", JSONObject.toJSONString(goods));
             return Result.ok("成功");
         }catch (Exception e){
             return Result.error(e.getMessage());
@@ -77,5 +94,27 @@ public class MerchantController extends BaseController {
         }catch (Exception e){
             return Result.error(e.getMessage());
         }
+    }
+
+    @RequestMapping("/order/All")
+    public PageUtils orderList(@RequestParam Map<String, Object> params) {
+        Page<OrderVo> page = new Page<>(getCurrent(request), getSize(request));
+        page.setCondition(params);
+        page.setAsc(false);
+        removePageParam(params);
+        OrderParams op = new OrderParams(new MerchantOrder());
+        OrderVo order = new OrderVo();
+        order.setUserId(getSSOUser().getId());
+        page = orderService.selectPage(page,op.buildOrderParam(order));
+        log.info("订单查询结果："+ JsonUtils.toJson(page));
+        PageUtils pageUtils = new PageUtils(page.getRecords(), page.getTotal());
+        return pageUtils;
+    }
+
+    private void addLogInfo(String creator,String type,String msg){
+        Interceptor logIntceptor = new LoggingInterceptor();
+        Framework interceptorFramework = new Framework(new ServiceImp()); // service是concertFramework的内部提供的服务。
+        interceptorFramework.addInterceptor(logIntceptor); // register
+        interceptorFramework.event(new Message(type,creator,msg) );
     }
 }

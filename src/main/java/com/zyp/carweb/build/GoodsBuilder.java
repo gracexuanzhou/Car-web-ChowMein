@@ -7,4 +7,8 @@ public interface GoodsBuilder {
     void buildGoods1(Goods goods);
     void buildGoods2(String createrName);
     GoodsVo retrieveResult();
+
+    public String name();
+    public Integer packing();
+    public float price();
 }

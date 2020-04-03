@@ -30,7 +30,7 @@ function save() {
         cache : true,
         type : "POST",
         url : "/customer/comment/save",
-        data : $('#signupForm').serialize(), // 你的formid
+        data : $('#commentForm').serialize(), // 你的formid
         async : false,
         error : function(request) {
             parent.layer.alert("网络超时");
@@ -51,15 +51,15 @@ function save() {
 }
 function validateRule() {
     var icon = "<i class='fa fa-times-circle'></i> ";
-    $("#signupForm").validate({
+    $("#commentForm").validate({
         rules : {
-            name : {
+            content : {
                 required : true
             }
         },
         messages : {
-            name : {
-                required : icon + "请输入名字"
+            content : {
+                required : icon + "请输入评论内容"
             }
         }
     })

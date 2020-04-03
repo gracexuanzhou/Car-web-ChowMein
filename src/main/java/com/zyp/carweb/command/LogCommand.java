@@ -14,4 +14,29 @@ public class LogCommand implements Command {
     public void execute(Goods goods) {
         receiver.saveGoodsLog(goods);
     }
+
+    @Override
+    public void aexecute(Goods goods) {
+        receiver.saveGoodsLog(goods);
+    }
+
+    @Override
+    public void bexecute(Goods goods) {
+        receiver.saveGoodsLog(goods);
+    }
+
+    @Override
+    public void cexecute(Goods goods) {
+        receiver.saveGoodsLog(goods);
+    }
+
+    @Override
+    public void dexecute(Goods goods) {
+        receiver.saveGoodsLog(goods);
+    }
+
+    @Override
+    public void fexecute(Goods goods) {
+        receiver.saveGoodsLog(goods);
+    }
 }

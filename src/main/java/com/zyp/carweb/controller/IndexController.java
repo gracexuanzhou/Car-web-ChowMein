@@ -1,11 +1,11 @@
 package com.zyp.carweb.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.zyp.carweb.abstractFactory.AbstractFactoryProducter;
 import com.zyp.carweb.base.BaseController;
-import com.zyp.carweb.factory.CustomerFactory;
-import com.zyp.carweb.factory.MenuFactory;
-import com.zyp.carweb.factory.MerchantFactory;
+import com.zyp.carweb.abstractFactory.CustomerFactory;
+import com.zyp.carweb.abstractFactory.MenuFactory;
+import com.zyp.carweb.abstractFactory.MerchantFactory;
 import com.zyp.carweb.model.Comment;
 import com.zyp.carweb.model.Goods;
 import com.zyp.carweb.service.CommentService;
@@ -35,15 +35,8 @@ public class IndexController extends BaseController {
 
     @RequestMapping("/index")
     public String index(HttpServletRequest request){
-        List<JSONObject> menuList = new ArrayList<>();
-        MenuFactory factory;
-        if(getSSOUser().getUserType().equals(1)){
-            factory = new CustomerFactory();
-        }else{
-            //商家
-            factory = new MerchantFactory();
-        }
-        menuList = factory.getMenu().produce();
+        MenuFactory factory = AbstractFactoryProducter.getFactory(getSSOUser().getUserType());
+        List<JSONObject>  menuList = factory.getMenu().produce();
         request.setAttribute("menus", menuList);
         request.setAttribute("noticelist", null);
         request.setAttribute("userName", getSSOUser().getUserName());
@@ -106,6 +99,11 @@ public class IndexController extends BaseController {
     @RequestMapping("/order")
     public String order(){
         return "customer/order";
+    }
+
+    @RequestMapping("/merchant/order")
+    public String morder(){
+        return "merchant/order";
     }
 
     @RequestMapping("/comment/{id}")

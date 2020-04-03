@@ -2,7 +2,6 @@ package com.zyp.carweb.base;
 
 import java.io.Serializable;
 
-
 public class SSOUserInfo implements Serializable {
 
 

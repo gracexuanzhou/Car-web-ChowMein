@@ -14,7 +14,7 @@ function save() {
 		cache : true,
 		type : "POST",
 		url : "/merchant/save",
-		data : $('#signupForm').serialize(), // 你的formid
+		data : $('#goodsAddForm').serialize(), // 你的formid
 		async : false,
 		error : function(request) {
 			parent.layer.alert("网络超时");
@@ -35,16 +35,34 @@ function save() {
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
+	$("#goodsAddForm").validate({
 		rules : {
-			name : {
+			brandName : {
+				required : true
+			},
+			typeName : {
+				required : true
+			},
+			price : {
+				required : true
+			},
+			place : {
 				required : true
 			}
 		},
 		messages : {
-			name : {
-				required : icon + "请输入名字"
+			brandName : {
+				required : icon + "请输入品牌名称"
+			},
+			typeName : {
+				required : icon + "请输入型号"
+			},
+			price : {
+				required : icon + "请输入价格"
+			},
+			place : {
+				required : icon + "请输入产地"
 			}
 		}
-	})
+	});
 }
