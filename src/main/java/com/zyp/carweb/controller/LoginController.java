@@ -27,9 +27,6 @@ public class LoginController {
     /**
      * 登录
      * String signcode(参数先去掉)
-     *
-     * @param user
-     * @return
      */
     @RequestMapping("/doLogin")
     public MessageInfo login(HttpServletRequest request, HttpServletResponse response, User user) {

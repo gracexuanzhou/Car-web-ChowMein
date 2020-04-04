@@ -10,7 +10,6 @@ import com.zyp.carweb.bridge.MerchantOrder;
 import com.zyp.carweb.bridge.OrderParams;
 import com.zyp.carweb.interceptor.Message;
 import com.zyp.carweb.interceptor.framework.Framework;
-import com.zyp.carweb.interceptor.framework.Service.ServiceImp;
 import com.zyp.carweb.interceptor.interceptors.Interceptor;
 import com.zyp.carweb.interceptor.interceptors.LoggingInterceptor;
 import com.zyp.carweb.model.Goods;
@@ -113,7 +112,7 @@ public class MerchantController extends BaseController {
 
     private void addLogInfo(String creator,String type,String msg){
         Interceptor logIntceptor = new LoggingInterceptor();
-        Framework interceptorFramework = new Framework(new ServiceImp()); // service是concertFramework的内部提供的服务。
+        Framework interceptorFramework = new Framework(); // service是concertFramework的内部提供的服务。
         interceptorFramework.addInterceptor(logIntceptor); // register
         interceptorFramework.event(new Message(type,creator,msg) );
     }

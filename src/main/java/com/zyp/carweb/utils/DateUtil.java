@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class DateUtil {
     public static final String DATE_SMALL_STR = "yyyy-MM-dd";
     public static final String DATE_HOUR_STR = "yyyyMMddHH";

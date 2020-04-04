@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
 public class ResponseUtils {
 
     public static void renderString(HttpServletResponse response, String data) {

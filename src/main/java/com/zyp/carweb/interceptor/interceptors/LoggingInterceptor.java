@@ -3,7 +3,6 @@ package com.zyp.carweb.interceptor.interceptors;
 
 import com.zyp.carweb.interceptor.framework.Context;
 
-
 public class LoggingInterceptor implements Interceptor {
     @Override
     public void execute(Context ctx) {
