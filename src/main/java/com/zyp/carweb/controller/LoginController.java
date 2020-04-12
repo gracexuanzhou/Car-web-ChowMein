@@ -27,6 +27,9 @@ public class LoginController {
     /**
      * 登录
      * String signcode(参数先去掉)
+     *
+     * @param user
+     * @return
      */
     @RequestMapping("/doLogin")
     public MessageInfo login(HttpServletRequest request, HttpServletResponse response, User user) {
@@ -35,10 +38,10 @@ public class LoginController {
         user.setPassWord(null);
         user = userService.findByUser(user);
         if (user == null || user.getId() == null) {
-            return new MessageInfo("没有该用户！", -2);
+            return new MessageInfo("User doesn't exist！", -2);
         }
         if (!inputPwd.equals(user.getPassWord())) {
-            return new MessageInfo("密码错误！", -4);
+            return new MessageInfo("Wrong Password！", -4);
         }
         LoginLogFactory factory = new LoginLogFactory();
         LoginLog loginLog;
@@ -58,13 +61,13 @@ public class LoginController {
             subjectUser.login(token);
             subjectUser.getSession().setAttribute("user", user);
             request.setAttribute("user", user);
-            return new MessageInfo("登录成功", 0);
+            return new MessageInfo("Login Successful", 0);
         } catch (UnknownAccountException uae) {
             errorMessage = "";
             log.info(errorMessage);
             return new MessageInfo(uae.getMessage(), 3);
         } catch (IncorrectCredentialsException ice) {
-            return new MessageInfo("密码错误", 3);
+            return new MessageInfo("Wrong Password", 3);
         } catch (LockedAccountException lae) {
             return new MessageInfo(lae.getMessage(), 3);
         } catch (AuthenticationException e) {
@@ -85,17 +88,17 @@ public class LoginController {
             user.setLoginName(null);
             User dbUser = userService.findByUser(user);
             if(dbUser != null){
-                return new MessageInfo("商户已存在，系统中仅允许有一个商家！", -2);
+                return new MessageInfo("Merchant already exists, only one merchant is allowed in the system!", -2);
             }
             user.setLoginName(loginName);
         }
         User dbUser = userService.findByUser(user);
         if (dbUser != null ) {
-            return new MessageInfo("用户已存在！", -2);
+            return new MessageInfo("User already exists!", -2);
         }
         user.setUserName(user.getLoginName());
         user.setPassWord(inputPwd);
         userService.insertSelective(user);
-        return new MessageInfo("注册成功", 0);
+        return new MessageInfo("Register Successfully", 0);
     }
 }

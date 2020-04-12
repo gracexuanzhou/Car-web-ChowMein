@@ -1,5 +1,6 @@
 package com.zyp.carweb.abstractFactory;
 
+
 public class AbstractFactoryProducter {
     public static MenuFactory getFactory(Integer type){
         if(type == 1){

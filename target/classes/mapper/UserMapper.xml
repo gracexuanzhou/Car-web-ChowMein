@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyp.carweb.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zyp.carweb.model.User" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="login_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pass_word" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_name, login_name, pass_word, user_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zyp.carweb.model.User" >
+    insert into user (id, user_name, login_name, 
+      pass_word, user_type)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, 
+      #{passWord,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyp.carweb.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="passWord != null" >
+        pass_word,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null" >
+        #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyp.carweb.model.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null" >
+        pass_word = #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyp.carweb.model.User" >
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      pass_word = #{passWord,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectByParam" parameterType="com.zyp.carweb.model.User" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where 1 = 1
+    <if test="userName != null" >
+      and user_name = #{userName,jdbcType=VARCHAR}
+    </if>
+    <if test="loginName != null" >
+      and login_name = #{loginName,jdbcType=VARCHAR}
+    </if>
+    <if test="passWord != null" >
+      and pass_word = #{passWord,jdbcType=VARCHAR}
+    </if>
+    <if test="userType != null" >
+      and user_type = #{userType,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>

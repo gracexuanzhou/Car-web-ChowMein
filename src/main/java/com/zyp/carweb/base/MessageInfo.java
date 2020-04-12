@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class MessageInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String message = "操作成功";
+    private String message = "Successful Operation";
     private int code = 0;
     private Object result;
 

@@ -14,11 +14,11 @@ public class ResultPage {
     }
 
     public ResultPage(Page page) {
-        this.page = new CustomPage()
-                .setPageNumber(page.getCurrent())
-                .setTotal(page.getTotal())
-                .setPageSize(page.getSize())
-                .setPageCount(page.getPages());
+        this.page = new CustomPage();
+        this.page.setPageNumber(page.getCurrent());
+        this.page.setTotal(page.getTotal());
+        this.page.setPageSize(page.getSize());
+        this.page.setPageCount(page.getPages());
         this.list = page.getRecords();
     }
     public ResultPage(Boolean isFocus){

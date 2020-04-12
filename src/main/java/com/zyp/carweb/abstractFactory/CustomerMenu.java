@@ -12,11 +12,11 @@ public class CustomerMenu extends AbstractMenu {
         List<JSONObject> menuList = new ArrayList<>();
         //顾客
         JSONObject menu = new JSONObject();
-        menu.put("text","商品列表");
+        menu.put("text","Product List");
         menu.put("url","/customer");
         menuList.add(menu);
         menu = new JSONObject();
-        menu.put("text","订单管理");
+        menu.put("text","Order Management");
         menu.put("url","/order");
         menuList.add(menu);
         return menuList;

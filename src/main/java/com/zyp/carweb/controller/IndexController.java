@@ -119,7 +119,7 @@ public class IndexController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        log.info("用户登出");
+        log.info("User Logout");
         return "redirect:/";
     }
 }

@@ -11,11 +11,11 @@ public class MerchantMenu extends AbstractMenu {
     public List<JSONObject> produce() {
         List<JSONObject> menuList = new ArrayList<>();
         JSONObject menu = new JSONObject();
-        menu.put("text","商品管理");
+        menu.put("text","Product Management");
         menu.put("url","/merchant");
         menuList.add(menu);
         menu = new JSONObject();
-        menu.put("text","订单管理");
+        menu.put("text","Order Management");
         menu.put("url","/merchant/order");
         menuList.add(menu);
         return menuList;

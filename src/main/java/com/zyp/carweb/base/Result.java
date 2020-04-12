@@ -3,17 +3,18 @@ package com.zyp.carweb.base;
 import java.io.Serializable;
 import java.util.HashMap;
 
+
 public class Result<T> extends HashMap<String, Object> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     public Result() {
         put("code", 0);
-        put("msg", "操作成功");
+        put("msg", "Successful Operation");
     }
 
     public static Result error() {
-        return error(1, "操作失败");
+        return error(1, "Operation Failed");
     }
 
     public static Result error(String msg) {

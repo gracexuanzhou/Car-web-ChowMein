@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 public class Receiver {
 
     public void saveGoodsLog(Goods goods){
-        System.out.println("保存产品："+ JSONObject.toJSONString(goods));
+        System.out.println("Save Goods："+ JSONObject.toJSONString(goods));
     }
 
-    public void buy(){
+    /*public void buy(){
         String name = "ABC";
         int quantity = 10;
         System.out.println("Stock [ Name: "+name+", Quantity: " + quantity +" ] bought");
@@ -31,5 +31,5 @@ public class Receiver {
          name = "ABC";
          quantity = 10;
         System.out.println("Stock [ Name: "+name+", Quantity: " + quantity +" ] sold");
-    }
+    }*/
 }

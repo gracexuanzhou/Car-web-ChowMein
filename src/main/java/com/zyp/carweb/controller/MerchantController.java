@@ -50,7 +50,7 @@ public class MerchantController extends BaseController {
         Map<String, Object> map = new HashMap<>();
         map.put("creator",getSSOUser().getId());
         page = goodsService.selectGoodsPage(page,map);
-        log.info("品牌查询结果："+ JsonUtils.toJson(page));
+        log.info("Brand query results："+ JsonUtils.toJson(page));
         PageUtils pageUtils = new PageUtils(page.getRecords(), page.getTotal());
         return pageUtils;
     }
@@ -62,7 +62,7 @@ public class MerchantController extends BaseController {
             goods.setCreator(getSSOUser().getId());
             goodsService.saveGoods(goods);
             addLogInfo(getSSOUser().getUserName(),"c", JSONObject.toJSONString(goods));
-            return Result.ok("成功");
+            return Result.ok("Successful");
         }catch (Exception e){
             return Result.error(e.getMessage());
         }
@@ -76,7 +76,7 @@ public class MerchantController extends BaseController {
         try{
             goodsService.updateByPrimaryKeySelective(goods);
             addLogInfo(getSSOUser().getUserName(),"u", JSONObject.toJSONString(goods));
-            return Result.ok("成功");
+            return Result.ok("Successful");
         }catch (Exception e){
             return Result.error(e.getMessage());
         }
@@ -89,7 +89,7 @@ public class MerchantController extends BaseController {
     public Result remove(Integer id) {
         try{
             goodsService.deleteByPrimaryKey(id);
-            return Result.ok("成功");
+            return Result.ok("Successful");
         }catch (Exception e){
             return Result.error(e.getMessage());
         }
@@ -105,7 +105,7 @@ public class MerchantController extends BaseController {
         OrderVo order = new OrderVo();
         order.setUserId(getSSOUser().getId());
         page = orderService.selectPage(page,op.buildOrderParam(order));
-        log.info("订单查询结果："+ JsonUtils.toJson(page));
+        log.info("Order query results："+ JsonUtils.toJson(page));
         PageUtils pageUtils = new PageUtils(page.getRecords(), page.getTotal());
         return pageUtils;
     }

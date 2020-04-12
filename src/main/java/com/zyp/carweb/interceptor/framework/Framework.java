@@ -7,6 +7,7 @@ import com.zyp.carweb.interceptor.interceptors.Interceptor;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Framework {
     private  Dispatcher interceptor_list  ;
 
@@ -25,9 +26,9 @@ public class Framework {
 //    }
 
     public void iterate_list(Context ctx){
-        System.out.println("## 商品信息维护Log: " + (ctx.getType().equals("c")?"新增":"修改") +" #开始#");
+        System.out.println("## Product Information Maintenance Log: " + (ctx.getType().equals("c")?"New":"modify") +" #Start#");
         interceptor_list.execute(ctx);
-        System.out.println("## 商品信息维护Log: " + (ctx.getType().equals("c")?"新增":"修改") +" #结束#");
+        System.out.println("## Product Information Maintenance Log: " + (ctx.getType().equals("c")?"New":"modify") +" #Over#");
     }
 
     public void event(Message message) {

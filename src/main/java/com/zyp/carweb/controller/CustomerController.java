@@ -52,7 +52,7 @@ public class CustomerController extends BaseController {
         page.setAsc(false);
         removePageParam(params);
         page = goodsService.selectGoodsPage(page,params);
-        log.info("品牌查询结果："+ JsonUtils.toJson(page));
+        log.info("Brand query results："+ JsonUtils.toJson(page));
         PageUtils pageUtils = new PageUtils(page.getRecords(), page.getTotal());
         return pageUtils;
     }
@@ -79,7 +79,7 @@ public class CustomerController extends BaseController {
         OrderVo order = new OrderVo();
         order.setUserId(getSSOUser().getId());
         page = orderService.selectPage(page,op.buildOrderParam(order));
-        log.info("订单查询结果："+ JsonUtils.toJson(page));
+        log.info("Order query results："+ JsonUtils.toJson(page));
         PageUtils pageUtils = new PageUtils(page.getRecords(), page.getTotal());
         return pageUtils;
     }

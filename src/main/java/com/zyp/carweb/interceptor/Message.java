@@ -1,5 +1,6 @@
 package com.zyp.carweb.interceptor;
 
+
 public class Message {
     String type;
     String creator;
